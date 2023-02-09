@@ -5,11 +5,12 @@ const axios = require("axios");
 router.get("/:id", async (req, res) => {
   try {
     const token = req.params.id;
-    const url = "https://sandbox.woohoo.in/rest/v3/catalog/categories/id/products?offset=offset&limit=limit";
+    const url =
+      "https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1";
 
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: "Bearer " + token,
       },
     });
 
