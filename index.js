@@ -7,5 +7,7 @@ app.get("/", (req, res) => res.send("Hello World!"));
 app.use("/auth", require("./routes/auth"));
 //Get token by id 
 app.use("/token", require("./routes/token"));
+//Orders
+app.use("/orders", require("./routes/orders"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
