@@ -2,26 +2,30 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-router.get("/:id", (req, res) => {
-  //Get auth code from id
-  const authorizationCode = req.params.id;
-  const url = "https://sandbox.woohoo.in/rest/v3/orders";
+router.get("/:id", async (req, res) => {
+  try {
+    const token = req.params.id;
+    const url = "https://sandbox.woohoo.in/rest/v3/orders";
 
-  //Get request with bearer token
-  axios
-    .get(url, {
+    const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${authorizationCode}`,
+        Authorization: `Bearer ${token}`,
       },
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        console.log(response.data);
-        res.send(response.data);
-      } else {
-        console.error(response.data);
-      }
     });
+
+    if (response.status === 200) {
+      console.log(response.data);
+      res.send(response.data);
+    } else {
+      console.error(response.data);
+      res.status(response.status).send(response.data);
+    }
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ error: "An error occurred while processing the request." });
+  }
 });
 
 module.exports = router;
