@@ -10,20 +10,31 @@ router.get("/", (req, res) => {
   $username = "techtreeapisandboxb2b@woohoo.in";
   $password = "techtreeapisandboxb2b@123";
 
-  //Post request to the auth server
+  const data = {
+    clientId,
+    username,
+    password,
+  };
+
   axios
-    .post($url, {
-      client_id: $clientId,
-      username: $username,
-      password: $password,
-    })
+    .post("https://sandbox.woohoo.in/oauth2/verify", data)
     .then((response) => {
-      console.log(response.data);
-      res.send(response.data);
+      const authorizationCode = response.data.authorizationCode;
+      if (authorizationCode) {
+        console.log(authorizationCode);
+        getToken(authorizationCode)
+          .then((bearerToken) => {
+            console.log(bearerToken);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        console.error("Error while getting authorization code");
+      }
     })
-    .catch((error) => {
-      console.log(error);
-      res.send(error);
+    .catch((err) => {
+      console.error(err);
     });
 });
 
