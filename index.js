@@ -12,4 +12,4 @@ app.use("/orders", require("./routes/orders"));
 //categories
 app.use("/categories", require("./routes/categories"));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Quick api listening on port ${port}!`));

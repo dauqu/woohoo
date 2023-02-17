@@ -25,6 +25,8 @@ router.get("/", (req, res) => {
     try {
         axios.get("https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1", {
             headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
                 "Authorization": `Bearer ${token}`,
                 "dateAtClient": moment().toISOString(),
                 "signature": signature
