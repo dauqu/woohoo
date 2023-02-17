@@ -3,7 +3,7 @@ const router = require('express').Router();
 const {default: axios} = require('axios');
 const {token} = require('./constant')
 
-router.get("/categories", (req, res) => {
+router.get("/", (req, res) => {
     try{
         axios.get("https://sandbox.woohoo.in/rest/v3/catalog/categories/id", {
             headers: {
