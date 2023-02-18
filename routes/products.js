@@ -23,6 +23,10 @@ router.get("/", (req, res) => {
             return res.json({
                 data: data.data
             })
+        }).catch(e => {
+            return res.json({
+                message: e.message
+            })
         })
     } catch (e) {
         return res.json({
