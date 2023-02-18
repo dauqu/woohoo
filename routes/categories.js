@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// default import axios 
 const { default: axios } = require('axios');
 const moment = require('moment');
 const { getSignatures } = require('../func');
@@ -21,6 +20,10 @@ router.get("/", (req, res) => {
         }).then(data => {
             return res.json({
                 data: data.data
+            })
+        }).catch(e => {
+            return res.json({
+                message: e.response.data
             })
         })
     } catch (e) {

@@ -1,3 +1,0 @@
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb25zdW1lcklkIjoiNDM1IiwiZXhwIjoxNjc3MjUwNTQ0LCJ0b2tlbiI6IjFmNTk1YjA2YWZmMTdhMjhhYmQ3YWVkZjUxZGZjNGY5In0.854-yUnrnQAqH2QCFp8UqtyPl6d6ooHl7X2UbndqAAc";
-
-module.exports = {token};
