@@ -1,11 +1,12 @@
 const router = require('express').Router();
 
-const { getSignatures } = require('../func');
+const { getSignatures, getToken } = require('../func');
 const moment = require('moment');
-const axios = require('axios');
+const { default: axios } = require('axios');
 
-router.get("/", (req, res) => {
-    const { token, categoryId } = req.query;
+router.get("/", async (req, res) => {
+    let token = await getToken();
+    const { categoryId } = req.query;
     let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products`;
 
     const signature = getSignatures("GET", url);
@@ -36,15 +37,14 @@ router.get("/", (req, res) => {
 })
 
 // GET Product by sku 
-router.get("/sku/:sku", (req, res) => {
+router.get("/sku/:sku", async (req, res) => {
     const { sku } = req.params;
-    const { token } = req.query;
+    let token = await getToken();
+
     let url = `https://sandbox.woohoo.in/rest/v3/catalog/products/${sku}`;
-
     const signature = getSignatures("GET", url);
-
     try {
-        axios.get(url, {
+        const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
@@ -52,14 +52,10 @@ router.get("/sku/:sku", (req, res) => {
                 "dateAtClient": moment().toISOString(),
                 "signature": signature
             }
-        }).then(data => {
-            return res.json({
-                data: data.data
-            })
-        }).catch(e => {
-            return res.json({
-                message: e.response.data
-            })
+        })
+
+        return res.json({
+            data: response.data
         })
     } catch (e) {
         return res.json({

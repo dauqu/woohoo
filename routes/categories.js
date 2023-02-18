@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { default: axios } = require('axios');
 const moment = require('moment');
-const { getSignatures } = require('../func');
+const { getSignatures, getToken } = require('../func');
 
-router.get("/", (req, res) => {
-    const { token } = req.query;
+router.get("/", async (req, res) => {
+    const token = await getToken();
 
     const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
 

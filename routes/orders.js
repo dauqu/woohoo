@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const { getToken } = require("../func");
 
 router.get("/:id", async (req, res) => {
   try {
-    const token = req.params.id;
+    const token = await getToken();
     const url =
       "https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1";
 

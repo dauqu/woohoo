@@ -70,6 +70,33 @@ const getSignatures = (method, url, body = false) => {
     return signature;
 }
 
+const getToken = async () => {
+
+    var username = "techtreeapisandboxb2b@woohoo.in";
+    var password = "techtreeapisandboxb2b@123";
+
+    var clientId = "d70aad72e6ca71e7d2114a38bfd4630a";
+    var clientSecret = "6fd59feb7effbde5d3c1fba488db6e1a";
+
+    const authData = {
+        clientId,
+        username,
+        password,
+    };
+
+    const check = await axios.post("https://sandbox.woohoo.in/oauth2/verify", authData)
+
+    const tokenData = {
+        clientId,
+        clientSecret,
+        authorizationCode: check.data.authorizationCode,
+    };
+
+    const token = axios.post("https://sandbox.woohoo.in/oauth2/token", tokenData)
+    return token;
+}
+
 module.exports = {
-    getSignatures
+    getSignatures,
+    getToken
 }
