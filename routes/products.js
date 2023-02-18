@@ -64,5 +64,63 @@ router.get("/sku/:sku", async (req, res) => {
     }
 })
 
+// create new order
+router.post("/", async (req, res) => {
+    const {
+        address,
+        billing,
+        isConsolidated,
+        payments,
+        orderType,
+        refno,
+        remarks,
+        deliveryMode,
+        egvDeliveryType,
+        products,
+        otp,
+        coBrandImageId,
+        cardnumber
+    } = req.body;
+    let token = await getToken();
+
+    let url = `https://sandbox.woohoo.in/rest/v3/orders`;
+    const signature = getSignatures("POST", url, body);
+    try {
+        const response = await axios.post(url, {
+            address,
+            billing,
+            isConsolidated,
+            payments,
+            orderType,
+            refno,
+            remarks,
+            deliveryMode,
+            egvDeliveryType,
+            products,
+            otp,
+            coBrandImageId,
+            cardnumber
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+                "dateAtClient": moment().toISOString(),
+                "signature": signature
+            }
+        })
+
+        return res.json({
+            data: response.data
+        })
+    } catch (e) {
+        return res.json({
+            message: e.message
+        })
+    }
+})
+
+
+
 
 module.exports = router;
