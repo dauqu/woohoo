@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     const signature = getSignatures("GET", url);
 
     try {
-        axios.get("url", {
+        axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
