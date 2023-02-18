@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const {default: axios} = require('axios');
 
 let sortObject = (object) => {
     if (object instanceof Array) {
@@ -71,7 +72,6 @@ const getSignatures = (method, url, body = false) => {
 }
 
 const getToken = async () => {
-
     var username = "techtreeapisandboxb2b@woohoo.in";
     var password = "techtreeapisandboxb2b@123";
 
