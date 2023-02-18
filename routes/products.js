@@ -1,16 +1,16 @@
 const router = require('express').Router();
-// default import axios 
-const { default: axios } = require('axios');
-const moment = require('moment');
+
 const { getSignatures } = require('../func');
+const moment = require('moment');
 
 router.get("/", (req, res) => {
-    const { token } = req.query;
+    const { token, categoryId } = req.query;
+    let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products?offset=offset&limit=limit`;
 
-    const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
+    const signature = getSignatures("GET", url);
 
     try {
-        axios.get("https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1", {
+        axios.get("url", {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",

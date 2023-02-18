@@ -11,5 +11,7 @@ app.use("/token", require("./routes/token"));
 app.use("/orders", require("./routes/orders"));
 //categories
 app.use("/categories", require("./routes/categories"));
+//products
+app.use("/products", require("./routes/products"));
 
-app.listen(port, () => console.log(`Hiii 2, Quick api listening on port ${port}!`));
+app.listen(port, () => console.log(`Products added, Quick api listening on port ${port}!`));
