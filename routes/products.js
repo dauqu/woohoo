@@ -6,7 +6,7 @@ const axios = require('axios');
 
 router.get("/", (req, res) => {
     const { token, categoryId } = req.query;
-    let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products?offset=offset&limit=limit`;
+    let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products`;
 
     const signature = getSignatures("GET", url);
 
