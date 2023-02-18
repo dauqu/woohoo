@@ -86,13 +86,20 @@ const getToken = async () => {
 
     const check = await axios.post("https://sandbox.woohoo.in/oauth2/verify", authData)
 
+
+    console.log("Check ");
+    console.log(check.data.authorizationCode);
+    
     const tokenData = {
         clientId,
         clientSecret,
         authorizationCode: check.data.authorizationCode,
     };
-
-    const token = axios.post("https://sandbox.woohoo.in/oauth2/token", tokenData)
+    
+    
+    const token = await axios.post("https://sandbox.woohoo.in/oauth2/token", tokenData)
+    console.log("Token ");
+    console.log(token.data);
     return token;
 }
 
