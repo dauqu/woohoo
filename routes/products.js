@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
             })
         }).catch(e => {
             return res.json({
-                message: e.message
+                message: e.response.data
             })
         })
     } catch (e) {
