@@ -14,4 +14,4 @@ app.use("/categories", require("./routes/categories"));
 //products
 app.use("/products", require("./routes/products"));
 
-app.listen(port, () => console.log(`Products added, Quick api listening on port ${port}!`));
+app.listen(port, () => console.log(`Products SKU, Quick api listening on port ${port}!`));
