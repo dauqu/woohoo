@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
     
     const token = await getToken();
     console.log(token);
-    const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
+    const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories')
 
     try {
         axios.get("https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1", {
@@ -35,8 +35,6 @@ router.get("/", async (req, res) => {
             const newCat = await Category.create(
                 data.data
             );
-
-            console.log(newCat);
 
             return res.json(newCat)
         })

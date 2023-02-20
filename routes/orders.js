@@ -1,32 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const { getToken } = require("../func");
+const moment = require("moment");
+const { getToken, getSignatures } = require("../func");
 
 router.get("/:id", async (req, res) => {
   try {
+    const url = "https://sandbox.woohoo.in/rest/v3/orders";
     const token = await getToken();
-    const url =
-      "https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1";
+    const signature = getSignatures("POST", url, req.body);
 
-    const response = await axios.get(url, {
+    axios.post(url, req.body, {
       headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': `Bearer ${token}`,
+        'dateAtClient': moment().toISOString(),
+        'signature': signature
+      }
+    })
+      .then((data) => {
+        if (data) {
+          return res.json({
+            data: data.data
+          })
+        }
+      })
+      .catch((err) => {
+        return res.json({
+          message: err.message
+        })
+      })
 
-    if (response.status === 200) {
-      console.log(response.data);
-      res.send(response.data);
-    } else {
-      console.error(response.data);
-      res.status(response.status).send(response.data);
-    }
   } catch (err) {
-    console.error(err);
-    res
+    return res
       .status(500)
-      .send({ error: "An error occurred while processing the request." });
+      .send({ message: err.message });
   }
 });
 
