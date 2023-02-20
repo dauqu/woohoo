@@ -6,7 +6,7 @@ const Category = require('../models/category_schema');
 
 
 router.get("/", async (req, res) => {
-    const allCats = await Category.find({updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() }});
+    const allCats = await Category.find({updatedAt: { $gt: moment().subtract(28, 'days').toISOString() }});
     
     if (allCats.length > 0) {
         return res.json({

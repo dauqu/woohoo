@@ -6,7 +6,7 @@ const { default: axios } = require('axios');
 const Product = require('../models/product_schema');
 
 router.get("/", async (req, res) => {
-    const allProds = await Product.find({ updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() } });
+    const allProds = await Product.find({ updatedAt: { $gt: moment().subtract(28, 'days').toISOString() } });
     
     if (allProds.length > 0) {
         return res.json({
