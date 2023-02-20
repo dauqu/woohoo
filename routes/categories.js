@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
             }
         }).then(async (data) => {
             const newCat = new Category({
-                ...data.data.data
+                ...data.data
             })
             await newCat.save();
             console.log(data.data);
