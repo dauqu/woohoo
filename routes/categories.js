@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     
     
     const token = await getToken();
+    console.log(token);
     const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
 
     try {
