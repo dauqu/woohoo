@@ -28,14 +28,14 @@ router.get("/", async (req, res) => {
                 "signature": signature
             }
         }).then(async (data) => {
-            const newCat = new Category({
-                ...data.data
-            })
-            await newCat.save();
-            console.log(data.data);
+            const newCat = await Category.create([
+                data.data
+            ]);
+            
+            console.log(newCat);
 
             return res.json({
-                data: data.data
+                data: newCat
             })
         })
     } catch (e) {
