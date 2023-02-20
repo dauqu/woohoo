@@ -3,11 +3,21 @@ const router = require('express').Router();
 const { getSignatures, getToken } = require('../func');
 const moment = require('moment');
 const { default: axios } = require('axios');
+const Product = require('../models/product_schema');
 
 router.get("/", async (req, res) => {
     let token = await getToken();
     const { categoryId } = req.query;
     let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products`;
+
+    const allProds = await Product.find({ updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() } });
+    console.log("allProds")
+    console.log(allProds);
+    if (allProds.length > 0) {
+        return res.json({
+            data: allProds
+        })
+    }
 
     const signature = getSignatures("GET", url);
 
@@ -20,10 +30,16 @@ router.get("/", async (req, res) => {
                 "dateAtClient": moment().toISOString(),
                 "signature": signature
             }
-        }).then(data => {
-            return res.json({
-                data: data.data
-            })
+        }).then(async (data) => {
+            // delete all doc
+            await Product.deleteMany({})
+            // insert new doc
+            const newProd = await Product.create(
+                data.data
+            );
+            console.log(newProd);
+
+            return res.json(newProd)
         }).catch(e => {
             return res.json({
                 message: e.response.data
