@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
             return res.json({
                 data: newCat
-            })g
+            })
         })
     } catch (e) {
         return res.json({

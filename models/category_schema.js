@@ -20,21 +20,17 @@ const categorySchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     images: {
         image: {
             type: String,
-            required: true
         },
         thumbnail: {
             type: String,
-            required: true
         }
     },
     subcategoriesCount: {
         type: Number,
-        required: true
     },
     subcategories: []
 }, {
