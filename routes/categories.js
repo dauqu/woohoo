@@ -2,11 +2,19 @@ const router = require('express').Router();
 const { default: axios } = require('axios');
 const moment = require('moment');
 const { getSignatures, getToken } = require('../func');
+const Category = require('../models/category_schema');
 
 
 router.get("/", async (req, res) => {
     const token = await getToken();
-    console.log(token);
+
+    const allCats = await Category.find({});
+    if (allCats.length > 0 && moment().subtract(5, 'minute') > allCats[0].updatedAt) {
+        return res.json({
+            data: allCats
+        })
+    }
+    
     
     const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
 
@@ -20,6 +28,9 @@ router.get("/", async (req, res) => {
                 "signature": signature
             }
         }).then(data => {
+            const newCat = new Category({
+                ...data.data.data
+            })
             return res.json({
                 data: data.data
             })
