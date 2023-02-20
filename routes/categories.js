@@ -3,6 +3,7 @@ const { default: axios } = require('axios');
 const moment = require('moment');
 const { getSignatures, getToken } = require('../func');
 
+
 router.get("/", async (req, res) => {
     const token = await getToken();
     console.log(token);
