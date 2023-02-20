@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     const allCats = await Category.find({updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() }});
     console.log("allCats")
     console.log(allCats);
-    
+
     if (allCats.length > 0) {
         return res.json({
             data: allCats
@@ -40,9 +40,7 @@ router.get("/", async (req, res) => {
 
             console.log(newCat);
 
-            return res.json({
-                data: newCat
-            })
+            return res.json(newCat)
         })
     } catch (e) {
         return res.json({
