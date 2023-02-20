@@ -14,8 +14,8 @@ router.get("/", async (req, res) => {
             data: allCats
         })
     }
-    
-    
+
+
     const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
 
     try {
@@ -28,15 +28,15 @@ router.get("/", async (req, res) => {
                 "signature": signature
             }
         }).then(async (data) => {
-            // const newCat = await Category.create([
-            //     data.data
-            // ]);
-            
-            console.log(data.data);
+            const newCat = await Category.create(
+                data.data
+            );
+
+            console.log(newCat);
 
             return res.json({
-                data: data.data
-            })
+                data: newCat
+            })g
         })
     } catch (e) {
         return res.json({
