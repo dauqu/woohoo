@@ -12,7 +12,6 @@ const db = () => {
                 console.log("DB Connected")
             }
         })
-        console.log("MongoDB Connected")
     } catch (e) {
         console.log(e.message)
         process.exit(1)
