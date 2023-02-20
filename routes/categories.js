@@ -8,8 +8,11 @@ const Category = require('../models/category_schema');
 router.get("/", async (req, res) => {
     const token = await getToken();
 
-    const allCats = await Category.find({});
-    if (allCats.length > 0 && moment().subtract(5, 'minute') > allCats[0].updatedAt) {
+    const allCats = await Category.find({updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() }});
+    console.log("allCats")
+    console.log(allCats);
+    
+    if (allCats.length > 0) {
         return res.json({
             data: allCats
         })
@@ -28,6 +31,9 @@ router.get("/", async (req, res) => {
                 "signature": signature
             }
         }).then(async (data) => {
+            // delete all doc
+            await Category.deleteMany({});
+            // insert new doc
             const newCat = await Category.create(
                 data.data
             );
