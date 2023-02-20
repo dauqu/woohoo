@@ -28,12 +28,12 @@ router.get("/", async (req, res) => {
                 "signature": signature
             }
         }).then(async (data) => {
-            // const newCat = new Category({
-            //     ...data.data.data
-            // })
-            // await newCat.save();
-            console.log(data.data.data);
-            
+            const newCat = new Category({
+                ...data.data.data
+            })
+            await newCat.save();
+            console.log(data.data);
+
             return res.json({
                 data: data.data
             })
