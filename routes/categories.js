@@ -27,10 +27,11 @@ router.get("/", async (req, res) => {
                 "dateAtClient": moment().toISOString(),
                 "signature": signature
             }
-        }).then(data => {
+        }).then(async (data) => {
             const newCat = new Category({
                 ...data.data.data
             })
+            await newCat.save();
             return res.json({
                 data: data.data
             })
