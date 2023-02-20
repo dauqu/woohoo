@@ -6,19 +6,17 @@ const { default: axios } = require('axios');
 const Product = require('../models/product_schema');
 
 router.get("/", async (req, res) => {
-    let token = await getToken();
-    const { categoryId } = req.query;
-    let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products`;
-
     const allProds = await Product.find({ updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() } });
-    console.log("allProds")
-    console.log(allProds);
+    
     if (allProds.length > 0) {
         return res.json({
             data: allProds
         })
     }
-
+    
+    const { categoryId } = req.query;
+    let url = `https://sandbox.woohoo.in/rest/v3/catalog/categories/${categoryId}/products`;
+    let token = await getToken();
     const signature = getSignatures("GET", url);
 
     try {

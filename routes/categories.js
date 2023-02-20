@@ -6,19 +6,16 @@ const Category = require('../models/category_schema');
 
 
 router.get("/", async (req, res) => {
-    const token = await getToken();
-
     const allCats = await Category.find({updatedAt: { $gt: moment().subtract(10, 'minutes').toISOString() }});
-    console.log("allCats")
-    console.log(allCats);
-
+    
     if (allCats.length > 0) {
         return res.json({
             data: allCats
         })
     }
-
-
+    
+    
+    const token = await getToken();
     const signature = getSignatures('GET', 'https://sandbox.woohoo.in/rest/v3/catalog/categories?q=1')
 
     try {
